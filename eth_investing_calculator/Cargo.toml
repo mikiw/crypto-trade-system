@@ -1,5 +1,5 @@
 [package]
-name = "hello-rust"
+name = "eth_investing_calculator"
 version = "0.1.0"
 edition = "2021"
 
