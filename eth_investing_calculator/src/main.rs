@@ -2,6 +2,8 @@ use std::io;
 use serde::Deserialize;
 use chrono::prelude::*;
 
+extern crate ether_converter;
+
 type Error = Box<dyn std::error::Error>;
 type Result<T, E = Error> = std::result::Result<T, E>;
 
@@ -83,7 +85,6 @@ async fn get_price(unix_timestamp: String) -> Result<EthPrice> {
 
 #[tokio::main]
 async fn main() -> Result<()> {
-    // TODO: Convert eth value as decimal value.
     // TODO: Calculate inputs (buy) and outputs (sell).
 
     let mut api_key = String::from("");
@@ -97,16 +98,18 @@ async fn main() -> Result<()> {
     println!("Your address: {}", address);
 
     let transactions = get_transactions(address, api_key).await?;
-
+    
     for i in transactions.result {
         println!("Transaction: ");
-        println!("{:#?}", i.value);
         println!("{:#?}", i.from);
         println!("{:#?}", i.to);
-
         let price = get_price(i.timeStamp).await?;
         println!("{:#?}", price);
 
+        let map = ether_converter::convert(&i.value, "wei");
+        let val = map.get("ether").unwrap();
+    
+        println!("{}", val);
     }
 
     Ok(())
