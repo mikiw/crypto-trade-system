@@ -1,4 +1,3 @@
-use std::io;
 use serde::Deserialize;
 use chrono::prelude::*;
 use std::{thread, time::Duration};
@@ -63,7 +62,7 @@ fn timestamp_to_date(unix_timestamp: String) -> DateTime<Utc> {
     datetime
 }
 
-async fn buy(transactions: Transactions, address: &str) -> Result<(f32, f32)> {
+async fn buy(transactions: &Transactions, address: &str) -> Result<(f32, f32)> {
 
 	let mut sum_buy_value = 0.0;
 	let mut sum_buy_usd = 0.0;
@@ -87,7 +86,7 @@ async fn buy(transactions: Transactions, address: &str) -> Result<(f32, f32)> {
 	Ok((sum_buy_value, sum_buy_usd))
 }
 
-async fn sell(transactions: Transactions, address: &str) -> Result<(f32, f32)> {
+async fn sell(transactions: &Transactions, address: &str) -> Result<(f32, f32)> {
 
 	let mut sum_sell_value = 0.0;
 	let mut sum_sell_usd = 0.0;
@@ -143,11 +142,9 @@ async fn main() -> Result<()> {
 
     println!("Your address: {}", address);
 
-    let transactions = get_transactions(address, api_key).await?;
+    let transactions = &get_transactions(address, api_key).await?;
     let buy = buy(transactions, address).await?;
-
-    let transactions2 = get_transactions(address, api_key).await?; // TODO: remove this ownership problem
-    let sell = sell(transactions2, address).await?;
+    let sell = sell(transactions, address).await?;
 
     println!("Income in USD: {}", sell.1 - buy.1);
 
