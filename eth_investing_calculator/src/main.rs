@@ -68,10 +68,6 @@ async fn buy(transactions: &Transactions, address: &str) -> Result<(f32, f32)> {
         }
     }
 
-    println!("sum_buy_value: {}", sum_buy_value);
-    println!("sum_buy_usd: {}", sum_buy_usd);
-    println!("");
-    
 	Ok((sum_buy_value, sum_buy_usd))
 }
 
@@ -92,10 +88,6 @@ async fn sell(transactions: &Transactions, address: &str) -> Result<(f32, f32)> 
             println!("[{}] sell value in usd: {}", &t.timeStamp, price.market_data.current_price.usd * value);
         }
     }
-
-    println!("sum_sell_value: {}", sum_sell_value);
-    println!("sum_sell_usd: {}", sum_sell_usd);
-    println!("");
 
 	Ok((sum_sell_value, sum_sell_usd))
 }
@@ -127,14 +119,25 @@ async fn get_price(unix_timestamp: &String) -> Result<EthPrice> {
 #[tokio::main]
 async fn main() -> Result<()> {
 
-    let mut api_key = "";
-    let mut address = "0xc55dbe3cd4afa41e8c24283c5be8d2481e2b79c1";
+    // TODO: Add tests.
+    // TODO: Split program into modules.
+
+    let api_key = "";
+    let address = "0xc55dbe3cd4afa41e8c24283c5be8d2481e2b79c1";
 
     println!("Your address: {}", address);
 
     let transactions = get_transactions(address, api_key).await?;
     let buy = buy(&transactions, address).await?;
     let sell = sell(&transactions, address).await?;
+
+    println!("sum_buy_value: {}", buy.0);
+    println!("sum_buy_usd: {}", buy.1);
+    println!("");
+    
+    println!("sum_sell_value: {}", sell.0);
+    println!("sum_sell_usd: {}", sell.1);
+    println!("");
 
     println!("Income in USD: {}", sell.1 - buy.1);
 
