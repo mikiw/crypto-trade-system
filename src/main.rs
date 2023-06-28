@@ -134,6 +134,9 @@ async fn main() -> Result<()> {
     // TODO: Add tests.
     // TODO: Split program into modules.
 
+    let test = types::add(1,2);
+    println!("{}", test);
+
     let api_key = "";
     let address = "0x8547db9f02643312a16643cb6733a9de19b51415";
 
