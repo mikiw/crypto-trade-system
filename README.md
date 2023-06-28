@@ -25,3 +25,6 @@ sum_sell_usd: 3467.0566
 
 Income in USD: 398.28198
 ```
+
+TODO:
+- Add simulation with technical indicators like MA, MACD, RSI

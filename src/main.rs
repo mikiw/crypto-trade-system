@@ -1,4 +1,7 @@
 use serde::Deserialize;
+use serde::Serialize;
+use serde_json::json;
+
 use chrono::prelude::*;
 use std::{thread, time::Duration};
 
@@ -21,17 +24,17 @@ struct Transaction {
     value: String,
 }
 
-#[derive(Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Debug)]
 struct EthPrice {
     market_data: MarketData,
 }
 
-#[derive(Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Debug)]
 struct MarketData {
     current_price: Price,
 }
 
-#[derive(Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Debug)]
 struct Price {
     usd: f32,
 }
@@ -61,6 +64,11 @@ async fn buy(transactions: &Transactions, address: &str) -> Result<(f32, f32)> {
             let map = ether_converter::convert(&t.value, "wei");
             let value: f32 = map.get("ether").unwrap().parse().unwrap(); // TODO: change to match to avoid panic
 
+            // println!("price");
+            // println!("{}", price.market_data.current_price.usd);
+            // println!("value");
+            // println!(value);
+            
             sum_buy_value += value;
             sum_buy_usd += price.market_data.current_price.usd * value;
 
@@ -113,6 +121,10 @@ async fn get_price(unix_timestamp: &String) -> Result<EthPrice> {
     
     thread::sleep(Duration::from_millis(1000)); // Thread sleep to avoid HTTP 429 [Too Many Requests]
 
+    // let obj = json!({"foo":1,"bar":2});
+    // println!("{}", serde_json::to_string_pretty(&obj).unwrap());
+    // println!("{}", serde_json::to_string_pretty(&response).unwrap());
+
     Ok(response)
 }
 
@@ -123,7 +135,7 @@ async fn main() -> Result<()> {
     // TODO: Split program into modules.
 
     let api_key = "";
-    let address = "0xc55dbe3cd4afa41e8c24283c5be8d2481e2b79c1";
+    let address = "0x8547db9f02643312a16643cb6733a9de19b51415";
 
     println!("Your address: {}", address);
 
