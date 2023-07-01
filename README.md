@@ -28,4 +28,4 @@ Income in USD: 398.28198
 ```
 
 TODO:
-- Add simulation with technical indicators like MA, MACD, RSI
+- Add simulation with technical indicators like MA, MACD, RSI (Backtesting)
