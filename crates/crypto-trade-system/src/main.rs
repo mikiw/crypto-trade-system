@@ -113,26 +113,20 @@ async fn get_transactions(address: &str, api_key: &str) -> Result<Transactions> 
 }
 
 async fn get_price(unix_timestamp: &String) -> Result<EthPrice> {
-
-    let request_url = format!("https://api.coingecko.com/api/v3/coins/ethereum/history?date={date}",
-                            date = timestamp_to_date(unix_timestamp).format("%d-%m-%Y"));
+    let date = timestamp_to_date(unix_timestamp).format("%d-%m-%Y");
+    let request_url = format!("https://api.coingecko.com/api/v3/coins/ethereum/history?date={date}");
     let http_response = reqwest::get(request_url).await?;
     let response = http_response.json::<EthPrice>().await?;
-    
     thread::sleep(Duration::from_millis(1000)); // Thread sleep to avoid HTTP 429 [Too Many Requests]
-
-    // let obj = json!({"foo":1,"bar":2});
-    // println!("{}", serde_json::to_string_pretty(&obj).unwrap());
-    // println!("{}", serde_json::to_string_pretty(&response).unwrap());
 
     Ok(response)
 }
 
 #[tokio::main]
 async fn main() -> Result<()> {
-
+    // TODO: Syncing prices from_start date to end_date in file on startup
     // TODO: Split program into modules.
-    // TODO: add MACD.
+    // TODO: Add MACD.
     // TODO: Add toolkits settings, formatting etc.
     // TODO: Add tests.
 
