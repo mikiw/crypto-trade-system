@@ -131,8 +131,10 @@ async fn get_price(unix_timestamp: &String) -> Result<EthPrice> {
 #[tokio::main]
 async fn main() -> Result<()> {
 
-    // TODO: Add tests.
     // TODO: Split program into modules.
+    // TODO: add MACD.
+    // TODO: Add toolkits settings, formatting etc.
+    // TODO: Add tests.
 
     let test = types::add(1,2);
     println!("{}", test);
