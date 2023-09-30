@@ -1,5 +1,4 @@
-@@ -1,30 +0,0 @@
-# Crypto Trade System
+# EthInvestingCalculator
 ETH income calculator in Rust is based on the assumption that an income transaction is a buy transaction at that time on the market and an outcome transaction is a sell.
 
 To run it we can simply change the wallet address and add api_key:
@@ -26,6 +25,3 @@ sum_sell_usd: 3467.0566
 
 Income in USD: 398.28198
 ```
-
-TODO:
-- Add simulation with technical indicators like MA, MACD, RSI (Backtesting)
