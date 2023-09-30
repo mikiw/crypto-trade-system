@@ -12,6 +12,7 @@ path = "src/main.rs"
 [dependencies]
 # local
 types = { workspace = true }
+technical-indicators = { workspace = true }
 
 # external
 reqwest = { workspace = true }

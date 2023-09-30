@@ -127,12 +127,18 @@ async fn main() -> Result<()> {
     // TODO: Syncing prices from_start date to end_date in file on startup
     // TODO: Split program into modules.
     // TODO: Add MACD.
+    // TODO: Signal detection.
+    // TODO: Calculate gain/loss.
+    // TODO: Backtesting simulations.
     // TODO: Add toolkits settings, formatting etc.
     // TODO: Add tests.
 
     let test = types::add(1,2);
     println!("{}", test);
 
+    let macd = technical_indicators::macd::macd::simulate(1,2);
+    println!("{}", macd);
+    
     let api_key = "";
     let address = "0x8547db9f02643312a16643cb6733a9de19b51415";
 
